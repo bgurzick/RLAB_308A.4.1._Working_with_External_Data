@@ -21,9 +21,33 @@ const API_KEY = "";
  *  - Each option should display text equal to the name of the breed.
  * This function should execute immediately.
  */
-async function fetchCatData(breedName) {
+async function fetchInitialLoad(catBreed) {
     const apiKey = 'api_key= ... ';
-    const url = `...link...=${breedName}&${apiKey}`;
+    const url = `...link...=${catBreed}&${apiKey}`;
+
+    try {
+        const response = await fetch(url);
+        const data = await response.json();
+        return data;
+      } catch (error) {
+        console.error('Error fetching data:', error);
+        return null;
+      }
+    }
+
+async function displayCatBreed(catBreed, containerId) {
+    const catBreedDiv = document.getElementById(containerId);
+
+    try {
+        const data = await fetchInitialLoad(catBreed);
+        if (data && data.length > 0) {
+            const breed = data[0];
+            const breedInfo =
+                `<h3>${breed.name}</h3>
+                <p><strong>Words Go Here:</strong> ${breed.b}
+        }
+    }
+}
 /**
  * 2. Create an event handler for breedSelect that does the following:
  * - Retrieve information on the selected breed from the cat API using fetch().
